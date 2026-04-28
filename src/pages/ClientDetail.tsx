@@ -20,7 +20,6 @@ import {
   Sparkles,
   StickyNote,
   User,
-  Wand2,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 

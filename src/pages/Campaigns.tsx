@@ -4,7 +4,6 @@ import { Session } from "@supabase/supabase-js";
 import { sendEmail } from "../lib/email";
 import {
   BarChart3,
-  CheckCircle2,
   Loader2,
   MailPlus,
   Megaphone,
