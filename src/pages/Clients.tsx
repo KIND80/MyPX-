@@ -189,7 +189,7 @@ const enrichClientWithAI = async ({
 };
 
 const csvEscape = (value: string | number | null | undefined) => {
-  const cleanValue = String(value ?? "").replaceAll('"', '""');
+  const cleanValue = String(value ?? "").replace(/"/g, '""');
   return `"${cleanValue}"`;
 };
 
@@ -281,8 +281,9 @@ export default function Clients({ session }: ClientsProps) {
     return matchesSearch && matchesGroup && matchesStatus && matchesScore;
   });
 
-  const hotCount = clients.filter((client) => Number(client.score || 0) >= 100)
-    .length;
+  const hotCount = clients.filter(
+    (client) => Number(client.score || 0) >= 100
+  ).length;
 
   const aiProcessingCount = clients.filter(
     (client) => client.public_enrichment_status === "processing"
@@ -380,18 +381,18 @@ export default function Clients({ session }: ClientsProps) {
   };
 
   const renderVariables = (text: string, insertedClient: Client) =>
-    text
-      .replaceAll("{{first_name}}", insertedClient.first_name || "")
-      .replaceAll("{{last_name}}", insertedClient.last_name || "")
-      .replaceAll("{{group_name}}", insertedClient.group_name || "")
-      .replaceAll("{{city}}", insertedClient.city || "")
-      .replaceAll("{{company}}", insertedClient.company || "")
-      .replaceAll("{{advisor_name}}", settings?.advisor_name || "")
-      .replaceAll("{{advisor_role}}", settings?.advisor_role || "")
-      .replaceAll("{{company_name}}", settings?.company_name || "")
-      .replaceAll("{{company_email}}", settings?.company_email || "")
-      .replaceAll("{{company_phone}}", settings?.company_phone || "")
-      .replaceAll("{{company_website}}", settings?.company_website || "");
+    (text || "")
+      .replace(/{{first_name}}/g, insertedClient.first_name || "")
+      .replace(/{{last_name}}/g, insertedClient.last_name || "")
+      .replace(/{{group_name}}/g, insertedClient.group_name || "")
+      .replace(/{{city}}/g, insertedClient.city || "")
+      .replace(/{{company}}/g, insertedClient.company || "")
+      .replace(/{{advisor_name}}/g, settings?.advisor_name || "")
+      .replace(/{{advisor_role}}/g, settings?.advisor_role || "")
+      .replace(/{{company_name}}/g, settings?.company_name || "")
+      .replace(/{{company_email}}/g, settings?.company_email || "")
+      .replace(/{{company_phone}}/g, settings?.company_phone || "")
+      .replace(/{{company_website}}/g, settings?.company_website || "");
 
   const sendWelcomeEmail = async (insertedClient: Client) => {
     if (!insertedClient.email) return;
@@ -448,7 +449,7 @@ ${settings?.advisor_name || settings?.company_name || "MyPX"}
 
     const htmlToSend = renderedContent.includes("<")
       ? renderedContent
-      : renderedContent.replaceAll("\n", "<br />");
+      : renderedContent.replace(/\n/g, "<br />");
 
     const result = await sendEmail({
       to: insertedClient.email,
@@ -1097,7 +1098,9 @@ function FormInput({
   name: string;
   value: string;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => void;
   placeholder: string;
   type?: string;

@@ -317,14 +317,14 @@ export default function Campaigns({ session }: CampaignsProps) {
 
     for (const client of targetedClients) {
       const subject = (campaign.subject || "")
-        .replaceAll("{{first_name}}", client.first_name || "")
-        .replaceAll("{{group_name}}", client.group_name || "");
+        .replace(/{{first_name}}/g, client.first_name || "")
+        .replace(/{{group_name}}/g, client.group_name || "");
 
       const rawContent = (campaign.content || "")
-        .replaceAll("{{first_name}}", client.first_name || "")
-        .replaceAll("{{group_name}}", client.group_name || "");
+        .replace(/{{first_name}}/g, client.first_name || "")
+        .replace(/{{group_name}}/g, client.group_name || "");
 
-      const htmlBase = rawContent.replaceAll("\n", "<br />");
+      const htmlBase = rawContent.replace(/\n/g, "<br />");
 
       const { data: logData, error: logError } = await supabase
         .from("email_logs")
@@ -430,8 +430,8 @@ export default function Campaigns({ session }: CampaignsProps) {
     const groupName = form.target_group || "Groupe";
 
     return (form.content || "")
-      .replaceAll("{{first_name}}", firstName)
-      .replaceAll("{{group_name}}", groupName);
+      .replace(/{{first_name}}/g, firstName)
+      .replace(/{{group_name}}/g, groupName);
   }, [form.content, form.target_group, targetedClients]);
 
   const readyCount = campaigns.filter((c) => c.status === "ready").length;

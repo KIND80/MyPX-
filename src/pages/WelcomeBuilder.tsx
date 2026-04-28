@@ -315,16 +315,16 @@ ${introText}
   };
 
   const previewSubject = subject
-    .replaceAll("{{first_name}}", "Christian")
-    .replaceAll("{{group_name}}", "Assurance")
-    .replaceAll("{{city}}", "Genève")
-    .replaceAll("{{company}}", "Entreprise Exemple");
+    .replace(/{{first_name}}/g, "Christian")
+    .replace(/{{group_name}}/g, "Assurance")
+    .replace(/{{city}}/g, "Genève")
+    .replace(/{{company}}/g, "Entreprise Exemple");
 
   const previewHtml = finalHtml
-    .replaceAll("{{first_name}}", "Christian")
-    .replaceAll("{{group_name}}", "Assurance")
-    .replaceAll("{{city}}", "Genève")
-    .replaceAll("{{company}}", "Entreprise Exemple");
+    .replace(/{{first_name}}/g, "Christian")
+    .replace(/{{group_name}}/g, "Assurance")
+    .replace(/{{city}}/g, "Genève")
+    .replace(/{{company}}/g, "Entreprise Exemple");
 
   if (loadingTemplate) {
     return (
